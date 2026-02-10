@@ -23,7 +23,7 @@
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yuvrajuppal/GenerateGradients
+    git clone https://github.com/yuvrajuppal/GenerateGradients.git
     ```
 
 2.  **Navigate to the project folder:**
