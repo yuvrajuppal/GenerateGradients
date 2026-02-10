@@ -18,7 +18,6 @@
 * **Framework:** [React.js](https://reactjs.org/)
 * **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 * **Icons:** [Lucide-React](https://lucide.dev/)
-* **Deployment:** Vercel / Netlify (Recommended)
 
 ## 📦 Installation
 
