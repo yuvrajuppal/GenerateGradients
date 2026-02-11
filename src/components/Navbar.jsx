@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Palette, RotateCcw, Box, CircleDot } from 'lucide-react';
+// Added Wand2 for the "Create" look
+import { Palette, RotateCcw, Box, CircleDot, Wand2 } from 'lucide-react';
 import { getRandomHexColor } from '../utils/getRandomHexColor';
 import { useDispatch } from 'react-redux';
 import { assignnewlist } from '../store/cardslistSlice.js';
-const Navbar = ({setpage}) => {
-
-
-
+import { useNavigate } from 'react-router-dom';
+const Navbar = ({ setpage }) => {
+    const reactnavi = useNavigate();
     const [count, setCount] = useState(10);
-    const [type, setType] = useState('linear'); // 'linear' or 'radial'
+    const [type, setType] = useState('linear');
     const dispatch = useDispatch();
-
+    const [Creategrapage, set_Creategrapage] = useState(false)
     const RegerateAll = () => {
         let colorlist = []
         for (let i = 0; i < count; i = i + 1) {
@@ -19,25 +19,19 @@ const Navbar = ({setpage}) => {
                 color2: getRandomHexColor(),
             }]
         }
-
         dispatch(assignnewlist(colorlist))
-
-
-
     }
-
 
     useEffect(() => {
         RegerateAll()
     }, [])
-
 
     return (
         <nav className="w-full sticky top-0 z-50 bg-[#0b0a1a] p-4 text-white font-sans border-b border-gray-900">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
 
                 {/* Left Section: Logo */}
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start cursor-pointer" onClick={() => setpage(0)}>
                     <div className="bg-[#6322ff] p-2 rounded-lg shadow-[0_0_15px_rgba(99,34,255,0.4)] shrink-0">
                         <Palette size={24} fill="white" />
                     </div>
@@ -51,62 +45,91 @@ const Navbar = ({setpage}) => {
                 <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto">
 
                     {/* Type Toggle: Linear vs Radial */}
-                    <div className="flex bg-[#161527] border border-gray-800 rounded-lg p-1">
-                        <button
-                            onClick={() => {
-                                setType('linear')
-                                setpage(0)
-                            }}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${type === 'linear'
-                                ? 'bg-[#6322ff] text-white shadow-md'
-                                : 'text-gray-500 hover:text-gray-300'
-                                }`}
-                        >
-                            <Box size={14} />
-                            Linear
-                        </button>
-                        <button
-                            onClick={() => {
-                                setType('radial')
-                                setpage(1)
-                            }}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${type === 'radial'
-                                ? 'bg-[#6322ff] text-white shadow-md'
-                                : 'text-gray-500 hover:text-gray-300'
-                                }`}
-                        >
-                            <CircleDot size={14} />
-                            Radial
-                        </button>
-                    </div>
+                    {
+                        !Creategrapage && <div className="flex bg-[#161527] border border-gray-800 rounded-lg p-1">
+                            <button
+                                onClick={() => {
+                                    setType('linear')
+                                    setpage(0)
+                                }}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${type === 'linear'
+                                    ? 'bg-[#6322ff] text-white shadow-md'
+                                    : 'text-gray-500 hover:text-gray-300'
+                                    }`}
+                            >
+                                <Box size={14} />
+                                Linear
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setType('radial')
+                                    setpage(1)
+                                }}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${type === 'radial'
+                                    ? 'bg-[#6322ff] text-white shadow-md'
+                                    : 'text-gray-500 hover:text-gray-300'
+                                    }`}
+                            >
+                                <CircleDot size={14} />
+                                Radial
+                            </button>
+                        </div>
+                    }
 
                     {/* Count Input */}
-                    <div className="flex items-center bg-[#161527] border border-gray-800 rounded-lg px-4 py-2.5 focus-within:border-[#6322ff] transition-all">
-                        <label htmlFor="count-input" className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mr-3 select-none">
-                            Count
-                        </label>
-                        <input
-                            id="count-input"
-                            type="number"
-                            min="1"
-                            value={count}
-                            onChange={(e) => setCount(e.target.value)}
-                            className="bg-transparent border-none outline-none w-8 text-sm font-bold text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                        />
-                    </div>
+                    {
+                        !Creategrapage && <div className="flex items-center bg-[#161527] border border-gray-800 rounded-lg px-4 py-2.5 focus-within:border-[#6322ff] transition-all">
+                            <label htmlFor="count-input" className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mr-3 select-none">
+                                Count
+                            </label>
+                            <input
+                                id="count-input"
+                                type="number"
+                                min="1"
+                                value={count}
+                                onChange={(e) => setCount(e.target.value)}
+                                className="bg-transparent border-none outline-none w-8 text-sm font-bold text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            />
+                        </div>
+
+                    }
+
+                    {/* NEW: Create Gradient Button */}
+                    {
+                        Creategrapage ? <button
+                            onClick={() => {
+                                set_Creategrapage(false)
+                                reactnavi('/')
+
+                            }} // Assuming page 2 is your Custom UI
+                            className="flex items-center justify-center gap-2 bg-[#161527] border border-gray-800 hover:border-[#6322ff] hover:text-[#6322ff] transition-all px-5 py-2.5 rounded-xl font-bold text-sm group w-full sm:w-auto"
+                        >
+
+                            <span className="whitespace-nowrap">Ramdom Gradient</span>
+                        </button> : <button
+                            onClick={() => {
+                                set_Creategrapage(true)
+                                reactnavi('/creategradiant')
+
+                            }} // Assuming page 2 is your Custom UI
+                            className="flex items-center justify-center gap-2 bg-[#161527] border border-gray-800 hover:border-[#6322ff] hover:text-[#6322ff] transition-all px-5 py-2.5 rounded-xl font-bold text-sm group w-full sm:w-auto"
+                        >
+                            <Wand2 size={18} className="group-hover:animate-pulse" />
+                            <span className="whitespace-nowrap">Create Gradient</span>
+                        </button>
+                    }
 
                     {/* Regenerate Button */}
-                    <button
-                        onClick={() => {
+                    {
+                        !Creategrapage && <button
+                            onClick={() => RegerateAll()}
+                            className="flex items-center justify-center gap-2 bg-[#6322ff] hover:bg-[#7239ff] active:scale-95 transition-all px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg w-full sm:w-auto"
+                        >
+                            <RotateCcw size={18} strokeWidth={3} />
+                            <span className="whitespace-nowrap">Regenerate All</span>
+                        </button>
+                    }
 
-                            RegerateAll()
-
-                        }}
-                        className="flex items-center justify-center gap-2 bg-[#6322ff] hover:bg-[#7239ff] active:scale-95 transition-all px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg w-full sm:w-auto"
-                    >
-                        <RotateCcw size={18} strokeWidth={3} />
-                        <span className="whitespace-nowrap">Regenerate All</span>
-                    </button>
                 </div>
 
             </div>

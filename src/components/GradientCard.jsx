@@ -28,7 +28,11 @@ const GradientCard = ({ color1 = "#ff0080", color2 = "#7928ca" }) => {
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-gray-500 text-[10px] font-black uppercase tracking-widest">
             LINEAR {angle}°
-          </h3>
+          </h3>+
+
+
+
+          
         </div>
 
         {/* 2. Range Slider Input */}
