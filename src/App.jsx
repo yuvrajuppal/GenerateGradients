@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import RadialGradpage from './utils/pages/RadialGradpage';
 import LinearGradppage from './utils/pages/LinearGradppage';
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
       }
       
       <Footer />
+        <ToastContainer theme="dark" position="bottom-right" />
     </>
   )
 }
